@@ -7,7 +7,8 @@ Ext.define('MySpots.view.main.MainPage',{
 	alias : 'widget.mainPage',
 	requires : [
 		'MySpots.view.tab.ContentTabPanel',
-		'MySpots.view.header.HeaderBar'
+		'MySpots.view.header.HeaderBar',
+		'MySpot.view.context.ContextPanel'
 	],
 	viewModel : null,
 	viewController : null,
@@ -22,6 +23,10 @@ Ext.define('MySpots.view.main.MainPage',{
 		{
 			xtype : 'contentTabPanel',
 			region : 'center'
+		},
+		{
+			xtype : 'contextPanel',
+			region : 'east'
 		}
 	]
 });

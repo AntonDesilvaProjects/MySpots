@@ -1,3 +1,6 @@
+/*
+	The top header bar of the application
+*/
 Ext.define('MySpots.view.header.HeaderBar',{
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.headerBar',

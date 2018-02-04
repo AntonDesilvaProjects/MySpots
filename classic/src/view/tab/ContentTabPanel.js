@@ -1,27 +1,19 @@
+/*
+    Tab panel that will hosts the main pages of the application
+*/
 Ext.define('MySpots.view.tab.ContentTabPanel',{
 	extend : 'Ext.tab.Panel',
 	requires : [
 	],
 
 	alias : 'widget.contentTabPanel',
-	ui: 'navigation',
 
-    //tabBarHeaderPosition: 1,
+    border : 1,
+
+	ui: 'navigation',
     titleRotation: 0,
     tabRotation: 0,
     tabPosition : 'left',
-
-    // header: {
-    //     layout: {
-    //         align: 'stretchmax'
-    //     },
-    //     title: {
-    //        text: 'My Spots',
-    //         flex: 0
-    //     },
-    //     iconCls: 'fa-th-list'
-    // },
-
     tabBar: {
         flex: 1,
         layout: {
@@ -29,15 +21,6 @@ Ext.define('MySpots.view.tab.ContentTabPanel',{
             overflowHandler: 'none'
         }
     },
-
-   	// responsiveConfig: {
-    //     tall: {
-    //         headerPosition: 'top'
-    //     },
-    //     wide: {
-    //         headerPosition: 'left'
-    //     }
-    // },
 
     items: [{
         title: 'Spots',
