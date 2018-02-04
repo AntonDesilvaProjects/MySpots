@@ -1,4 +1,4 @@
-Ext.define('MySpots.view.main.MainPage',{
+Ext.define('MySpots.view.tab.ContentTabPanel',{
 	extend : 'Ext.tab.Panel',
 	requires : [
 	],
@@ -6,21 +6,21 @@ Ext.define('MySpots.view.main.MainPage',{
 	alias : 'widget.contentTabPanel',
 	ui: 'navigation',
 
-    tabBarHeaderPosition: 1,
+    //tabBarHeaderPosition: 1,
     titleRotation: 0,
     tabRotation: 0,
     tabPosition : 'left',
 
-    header: {
-        layout: {
-            align: 'stretchmax'
-        },
-        title: {
-           text: 'My Spots',
-            flex: 0
-        },
-        iconCls: 'fa-th-list'
-    },
+    // header: {
+    //     layout: {
+    //         align: 'stretchmax'
+    //     },
+    //     title: {
+    //        text: 'My Spots',
+    //         flex: 0
+    //     },
+    //     iconCls: 'fa-th-list'
+    // },
 
     tabBar: {
         flex: 1,
@@ -30,29 +30,29 @@ Ext.define('MySpots.view.main.MainPage',{
         }
     },
 
-   	responsiveConfig: {
-        tall: {
-            headerPosition: 'top'
-        },
-        wide: {
-            headerPosition: 'left'
-        }
-    },
+   	// responsiveConfig: {
+    //     tall: {
+    //         headerPosition: 'top'
+    //     },
+    //     wide: {
+    //         headerPosition: 'left'
+    //     }
+    // },
 
     items: [{
-        title: 'Home',
+        title: 'Spots',
         glyph: 72,
         html: "KitchenSink.DummyText.longText"
     }, {
-        title: 'Users',
+        title: 'Transit',
         glyph: 117,
         html: "KitchenSink.DummyText.extraLongText"
     }, {
-        title: 'Groups',
+        title: 'Places',
         glyph: 85,
         html: "KitchenSink.DummyText.longText"
     }, {
-        title: 'Settings',
+        title: 'Profile',
         glyph: 42,
         html: "KitchenSink.DummyText.extraLongText"
     }]
