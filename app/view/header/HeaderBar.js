@@ -5,6 +5,7 @@ Ext.define('MySpots.view.header.HeaderBar',{
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.headerBar',
 	requires : [
+		'MySpot.fwk.map.BasicMap'
 	],
 	initComponent : function()
 	{
@@ -42,6 +43,19 @@ Ext.define('MySpots.view.header.HeaderBar',{
                 width: 35,
                 alt:'current user image',
                 src: 'resources/profile_generic_male.svg'
+			},
+			{
+				xtype : 'basic-map',
+				itemId : 'basic-map',
+				mapOptions : {
+					zoom : 3,
+					center : {
+						lat : -34.397,
+						lng : 150.644
+					}
+				},
+				width : 500,
+				height : 500
 			}			
 		];
 		this.callParent( arguments );
