@@ -31,7 +31,7 @@ Ext.define('MySpot.fwk.map.BasicMap',{
 			minZoom : null,
 			zoom : 10
 		}, 
-		mapListeners : null //Set of event handlers for various events fired by the BasicMap
+		listeners : null //Set of event handlers for various events fired by the BasicMap
 	},
 	defaultListenerScope : true,
 	/*
@@ -75,10 +75,22 @@ Ext.define('MySpot.fwk.map.BasicMap',{
 
 			if( googleMaps )
 			{
+				//Initialize a Google Maps object with map options and 
+				//attach it to the container's DOM
 				var cmpElement = me.getEl();
 				map = new googleMaps.Map( cmpElement.dom, mapOptions );
 				me.setMap( map );
+
+				//Attach event listeners
+				var mapEvent = googleMaps.event;
+				mapEvent.addListener( map, 'zoom_changed', Ext.bind( me.onZoomChanged, me ) );
+
 			}
 		}
+		return map;
+	},
+	onZoomChanged : function()
+	{
+		alert('zoom changed');
 	}
 });
