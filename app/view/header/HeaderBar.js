@@ -55,9 +55,37 @@ Ext.define('MySpots.view.header.HeaderBar',{
 					}
 				},
 				width : 500,
-				height : 500
+				height : 500,
+				listeners : {
+					zoomchange : function( map, newZoom, oldZoom )
+					{
+						console.log('New Zoom:' + newZoom + ', Old Zoom: ' + oldZoom );
+					},
+					click : function( map, args )
+					{
+						console.log( args );
+					}
+				}
 			}			
 		];
 		this.callParent( arguments );
+		/*
+
+					debugger;
+			
+			var el = me.getEl();
+			var cmpElement = me.getEl().dom.id;
+
+			//var a = document.getElementById( cmpElement );
+
+			map = new google.maps.Map( el.dom, {
+				center : {
+					lat : -34.397,
+					lng : 150.644
+				},
+				zoom : mapOptions.zoom
+			});
+			me.setMap( map );
+	*/
 	}
 });
