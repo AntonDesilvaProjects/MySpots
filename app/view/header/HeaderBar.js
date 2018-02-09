@@ -63,7 +63,23 @@ Ext.define('MySpots.view.header.HeaderBar',{
 					},
 					click : function( map, args )
 					{
-						console.log( args );
+						//console.log( args );
+						var marker = Ext.create('MySpots.fwk.BasicMarker',{
+							lat : args.map.lat,
+							lng : args.map.lng,
+							animation : 'drop',
+							title : "Places",
+							label : 'Australia',
+							draggable : true,
+							listeners : {
+								click : function( marker, event )
+								{
+									console.log( event );
+								}
+							}
+						});
+						//or marker.addToMap( map );
+						map.addMarker( marker );
 					}
 				}
 			}			

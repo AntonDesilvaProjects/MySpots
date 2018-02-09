@@ -90,6 +90,10 @@ Ext.define('MySpot.fwk.map.BasicMap',{
 		}
 		return map;
 	},
+
+	/*
+		Event listeners
+	*/
 	onZoomChanged : function()
 	{
 		var me = this;
@@ -103,14 +107,42 @@ Ext.define('MySpot.fwk.map.BasicMap',{
 		var map = me.getMap();
 		var args = {
 			map : {
-				lat : clickEvent.da.x,
-				lng : clickEvent.da.y
+				lat : clickEvent.latLng.lat(),
+				lng : clickEvent.latLng.lng()
 			},
 			mouse : {
-				x : clickEvent.pixel.x,
-				y : clickEvent.pixel.y
-			}
+				x : clickEvent.pixel ? clickEvent.pixel.x : null,
+				y : clickEvent.pixel ? clickEvent.pixel.y : null
+			},
+			placeId : clickEvent.placeId
 		};
-		me.fireEvent('click', map, args );
-	}
+		me.fireEvent('click', me, args );
+	},
+
+	/*
+		Map core functionality
+	*/
+	addMarker : function( marker )
+	{
+		//Persist the markers in memory
+		//Add to the map
+		var me = this;
+		marker.addToMap( me );
+	},
+	removeMarker : function( markerId )
+	{
+
+	},
+	addPolyline : function( polyline )
+	{
+
+	},
+	removePolyline : function( polylineId )
+	{
+
+	},
+	setMapStyle : function( styleConfig )
+	{
+		//put in config
+	},
 });
