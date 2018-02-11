@@ -32,6 +32,10 @@ Ext.define('MySpot.fwk.map.BasicMap',{
 			zoom : 10
 		}
 	},
+
+	markers : new Ext.util.HashMap(),
+	polylines : [],
+
 	defaultListenerScope : true,
 	/*
 		Merge the default config with client config and initialize the component.
@@ -98,7 +102,7 @@ Ext.define('MySpot.fwk.map.BasicMap',{
 	{
 		var me = this;
 		var map = me.getMap();
-		me.fireEvent('zoomchange', map, map.zoom, me.prevZoom );
+		me.fireEvent('zoomchange', me, map.zoom, me.prevZoom );
 		me.prevZoom = me.getMap().zoom;
 	},
 	onMapClick : function( clickEvent )
@@ -122,16 +126,25 @@ Ext.define('MySpot.fwk.map.BasicMap',{
 	/*
 		Map core functionality
 	*/
-	addMarker : function( marker )
+	addMarker : function( markersToAdd )
 	{
-		//Persist the markers in memory
-		//Add to the map
 		var me = this;
-		marker.addToMap( me );
+		Ext.Array.forEach( me.convertToArray( markersToAdd ), function( marker ) {
+			me.markers.add( marker.getId(), marker );
+			marker.addToMap( me );
+		});
 	},
-	removeMarker : function( markerId )
+	removeMarker : function( markersToRemove )
 	{
-
+		var me = this;
+		Ext.Array.forEach( me.convertToArray( markersToRemove ), function( marker ) {
+			var removedMarker = me.markers.get( marker );
+			if( removedMarker )
+			{
+				me.markers.removeByKey( marker );
+				removedMarker.removeFromMap();
+			}
+		});	
 	},
 	addPolyline : function( polyline )
 	{
@@ -145,4 +158,14 @@ Ext.define('MySpot.fwk.map.BasicMap',{
 	{
 		//put in config
 	},
+
+	/*
+		Utility functions
+	*/
+	convertToArray : function( objs )
+	{
+		if( !Ext.isArray( objs ) )
+			objs = [ objs ];
+		return objs;
+	}
 });

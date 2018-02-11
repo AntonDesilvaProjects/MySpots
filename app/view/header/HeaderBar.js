@@ -60,11 +60,13 @@ Ext.define('MySpots.view.header.HeaderBar',{
 					zoomchange : function( map, newZoom, oldZoom )
 					{
 						console.log('New Zoom:' + newZoom + ', Old Zoom: ' + oldZoom );
+						var m = map.markers;
+						
+						map.removeMarker( m.getKeys()[0] );
 					},
 					click : function( map, args )
 					{
-						//console.log( args );
-						var marker = Ext.create('MySpots.fwk.BasicMarker',{
+						var marker = Ext.create('MySpots.fwk.BasicMarker', {
 							lat : args.map.lat,
 							lng : args.map.lng,
 							animation : 'drop',

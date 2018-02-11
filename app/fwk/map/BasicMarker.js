@@ -28,7 +28,8 @@ Ext.define('MySpots.fwk.BasicMarker', {
 		shape : undefined,
 		animation : undefined,
 
-		marker : undefined
+		marker : undefined,
+		map : undefined //The map to which this marker is added
 	},
 	constructor : function( config )
 	{
@@ -105,9 +106,18 @@ Ext.define('MySpots.fwk.BasicMarker', {
 	/*
 		Core Functionality
 	*/
-	addToMap : function( basicMap ) //google map object
+	addToMap : function( basicMap ) //BasicMap object
 	{
 		var me = this;
+		me.setMap( basicMap );
 		me.getMarker().setMap( basicMap.getMap() );
+	},
+	removeFromMap : function()
+	{
+		var me = this;
+		if( me.getMap() === undefined ) //marker not associated with a map
+			return;
+		me.setMap( undefined );
+		me.getMarker().setMap( null );
 	}
 });
