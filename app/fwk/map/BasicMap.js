@@ -14,6 +14,10 @@ Ext.define('MySpot.fwk.map.BasicMap',{
 	requiredScripts : [
 		'//maps.googleapis.com/maps/api/js?key=AIzaSyAKCE6FKbwaROHan7GB4KeOe7jCUqTZoeI'
 	],
+	statics : {
+		POLYLINE : 'polyline',
+		MARKER : 'marker'
+	},
 	config : {
 		map : null, //Instance of Google Maps object
 		useCurrentLocation : false, //Should the map automatically center at the current location ?
@@ -34,7 +38,7 @@ Ext.define('MySpot.fwk.map.BasicMap',{
 	},
 
 	markers : new Ext.util.HashMap(),
-	polylines : [],
+	polylines : new Ext.util.HashMap(),
 
 	defaultListenerScope : true,
 	/*
@@ -122,37 +126,136 @@ Ext.define('MySpot.fwk.map.BasicMap',{
 		};
 		me.fireEvent('click', me, args );
 	},
-
 	/*
 		Map core functionality
 	*/
 	addMarker : function( markersToAdd )
 	{
 		var me = this;
-		Ext.Array.forEach( me.convertToArray( markersToAdd ), function( marker ) {
-			me.markers.add( marker.getId(), marker );
-			marker.addToMap( me );
-		});
+		// Ext.Array.forEach( me.convertToArray( markersToAdd ), function( marker ) {
+		// 	me.markers.add( marker.getId(), marker );
+		// 	marker.addToMap( me );
+		// });
+		// me.fireEvent('markeradded', me );
+		me.addComponent( markersToAdd );
+
 	},
+	/*
+		Removes marker(s) from the map.
+		@param markersToRemove - a marker object or array of marker objects
+		@return - number of markers removed
+	*/
 	removeMarker : function( markersToRemove )
 	{
 		var me = this;
+		var markerIdsToRemove = [];
 		Ext.Array.forEach( me.convertToArray( markersToRemove ), function( marker ) {
-			var removedMarker = me.markers.get( marker );
-			if( removedMarker )
+			markerIdsToRemove.push( marker.getId() );
+		});	
+		if( markerIdsToRemove.length > 0 )
+			return me.removeMarkerById( markerIdsToRemove );
+		return 0;
+	},
+	/*
+		Removes marker(s) from the map if the specified marker is in this
+		map.
+		@param markerIdsToRemove - a marker id or array of marker ids
+		@return - number of markers removed
+	*/
+	removeMarkerById : function( markerIdsToRemove )
+	{
+		var me = this;
+		// var removeCount = 0;
+		// Ext.Array.forEach( me.convertToArray( markerIdsToRemove ), function( marker ) {
+		// 	var markerToRemove = me.markers.get( marker );
+		// 	if( markerToRemove )
+		// 	{
+		// 		me.markers.removeByKey( marker );
+		// 		markerToRemove.removeFromMap();
+		// 		++removeCount;
+		// 	}
+		// });	
+		// return removeCount;
+		return me.removeComponent( markerIdsToRemove, MySpot.fwk.map.BasicMap.MARKER );
+	},
+	addPolyline : function( polylinesToAdd )
+	{
+		var me = this;
+		// Ext.Array.forEach( me.convertToArray( polylinesToAdd ), function( polyline ) {
+		// 	me.polylines.add( polyline.getId(), polyline );
+		// 	polyline.addToMap( me );
+		// });
+		// me.fireEvent('polylineadded', me );
+		me.addComponent( polylinesToAdd );
+	},
+	removePolyline : function( polylinesToRemove )
+	{
+		var me = this;
+		var polylineIdsToRemove = [];
+		Ext.Array.forEach( me.convertToArray( polylinesToRemove ), function( polyline ) {
+			polylineIdsToRemove.push( polyline.getId() );
+		});	
+		if( polylineIdsToRemove.length > 0 )
+			return me.removePolylineById( polylineIdsToRemove );
+		return 0;
+	},
+	removePolylineById : function( polylineIdsToRemove )
+	{
+		var me = this;
+		return me.removeComponent( polylineIdsToRemove, MySpot.fwk.map.BasicMap.POLYLINE );
+	},
+	addComponent : function( mapComponent )
+	{
+		var me = this;
+		var addCount = 0;
+		Ext.Array.forEach( me.convertToArray( mapComponent ), function( component ) 
+		{
+			if( component instanceof MySpots.fwk.BasicMarker )
 			{
-				me.markers.removeByKey( marker );
-				removedMarker.removeFromMap();
+				me.markers.add( component.getId(), component );
+				me.fireEvent('markeradded', me, component );
+			}
+			else if( component instanceof MySpots.fwk.BasicPolyline )
+			{
+				me.polylines.add( component.getId(), component );
+				me.fireEvent('polylineadded', me, component );
+			}
+			component.addToMap( me );
+			++addCount;
+		});
+		return addCount;	
+	},
+	removeComponent : function( componentIdToRemove, componentType )
+	{
+		var me = this;
+		var removeCount = 0;
+		Ext.Array.forEach( me.convertToArray( componentIdToRemove ), function( componentId ) 
+		{	
+			var eventName = undefined;
+			var componentMap = undefined;
+
+			if( componentType === MySpot.fwk.map.BasicMap.MARKER )
+			{
+				componentMap = me.markers;
+				eventName = 'markerremove';
+			}
+			else if( componentType === MySpot.fwk.map.BasicMap.POLYLINE )
+			{
+				componentMap = me.polylines;
+				eventName = 'polylineremove';
+			}
+
+			var componentToRemove = ( componentMap !== undefined ) ? componentMap.get( componentId ) : null;
+			if( componentToRemove !== null )
+			{
+				componentMap.removeByKey( componentId );
+				componentToRemove.removeFromMap();
+				++removeCount;
+				if( eventName !== undefined )
+					me.fireEvent( eventName, me, componentToRemove );
 			}
 		});	
-	},
-	addPolyline : function( polyline )
-	{
-
-	},
-	removePolyline : function( polylineId )
-	{
-
+		return removeCount;
 	},
 	setMapStyle : function( styleConfig )
 	{

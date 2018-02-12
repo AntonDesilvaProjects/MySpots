@@ -59,10 +59,11 @@ Ext.define('MySpots.view.header.HeaderBar',{
 				listeners : {
 					zoomchange : function( map, newZoom, oldZoom )
 					{
-						console.log('New Zoom:' + newZoom + ', Old Zoom: ' + oldZoom );
+						// console.log('New Zoom:' + newZoom + ', Old Zoom: ' + oldZoom );
 						var m = map.markers;
 						
-						map.removeMarker( m.getKeys()[0] );
+						map.removeMarker( m.get( m.getKeys()[0] ) );
+
 					},
 					click : function( map, args )
 					{
@@ -82,6 +83,22 @@ Ext.define('MySpots.view.header.HeaderBar',{
 						});
 						//or marker.addToMap( map );
 						map.addMarker( marker );
+
+						var polyline = Ext.create('MySpots.fwk.BasicPolyline', {
+							path : [
+								{lat: 37.772, lng: -122.214},
+						        {lat: 21.291, lng: -157.821},
+						        {lat: -18.142, lng: 178.431},
+						        {lat: -27.467, lng: 153.027}
+							]
+						});
+						//map.addPolyline( polyline );
+					},
+					polylineadded : function() {
+						alert('polyline added')
+					},
+					markeradded : function() {
+						alert('marker added')
 					}
 				}
 			}			

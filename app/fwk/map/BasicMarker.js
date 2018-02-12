@@ -49,7 +49,7 @@ Ext.define('MySpots.fwk.BasicMarker', {
 
 		if( !googleMaps )
 			throw "Cannot locate the Google Maps API!";
-		if( !( me.getLat() && me.getLng() ) )
+		if( me.getLat() === undefined && me.getLng() === undefined )
 			throw "Latitude and Longitude are required to create a marker!"
 
 		//Generate a config for the marker
