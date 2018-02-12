@@ -132,13 +132,7 @@ Ext.define('MySpot.fwk.map.BasicMap',{
 	addMarker : function( markersToAdd )
 	{
 		var me = this;
-		// Ext.Array.forEach( me.convertToArray( markersToAdd ), function( marker ) {
-		// 	me.markers.add( marker.getId(), marker );
-		// 	marker.addToMap( me );
-		// });
-		// me.fireEvent('markeradded', me );
 		me.addComponent( markersToAdd );
-
 	},
 	/*
 		Removes marker(s) from the map.
@@ -165,27 +159,11 @@ Ext.define('MySpot.fwk.map.BasicMap',{
 	removeMarkerById : function( markerIdsToRemove )
 	{
 		var me = this;
-		// var removeCount = 0;
-		// Ext.Array.forEach( me.convertToArray( markerIdsToRemove ), function( marker ) {
-		// 	var markerToRemove = me.markers.get( marker );
-		// 	if( markerToRemove )
-		// 	{
-		// 		me.markers.removeByKey( marker );
-		// 		markerToRemove.removeFromMap();
-		// 		++removeCount;
-		// 	}
-		// });	
-		// return removeCount;
 		return me.removeComponent( markerIdsToRemove, MySpot.fwk.map.BasicMap.MARKER );
 	},
 	addPolyline : function( polylinesToAdd )
 	{
 		var me = this;
-		// Ext.Array.forEach( me.convertToArray( polylinesToAdd ), function( polyline ) {
-		// 	me.polylines.add( polyline.getId(), polyline );
-		// 	polyline.addToMap( me );
-		// });
-		// me.fireEvent('polylineadded', me );
 		me.addComponent( polylinesToAdd );
 	},
 	removePolyline : function( polylinesToRemove )
@@ -204,6 +182,16 @@ Ext.define('MySpot.fwk.map.BasicMap',{
 		var me = this;
 		return me.removeComponent( polylineIdsToRemove, MySpot.fwk.map.BasicMap.POLYLINE );
 	},
+	/*
+		Adds a component to the map and BasicMap's cache. Components include BasicMarker,
+		and BasicPolyline objects.
+
+		@param mapComponent - a object or array of objects that implements the 'addToMap' 
+		function which  should add the component to the underlying Google Maps map
+		@return the number of components sucessfuly added.
+
+		Fires an addition event.
+	*/
 	addComponent : function( mapComponent )
 	{
 		var me = this;
@@ -225,6 +213,17 @@ Ext.define('MySpot.fwk.map.BasicMap',{
 		});
 		return addCount;	
 	},
+	/*
+		Removes component from the map and also removes from BasicMap's local cache. Components include
+		BasicMarker, and BasicPolyline objects.
+
+		@param componentIdToRemove - component id or array of component id which
+		belong to components on the map. Component should implement removeFromMap
+		function which will remove the component from the underling Google Maps map.
+		@param  componentType - one of the static types defined in the statics config
+
+		Fires remove component event
+	*/
 	removeComponent : function( componentIdToRemove, componentType )
 	{
 		var me = this;
