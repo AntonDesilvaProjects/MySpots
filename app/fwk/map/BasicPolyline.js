@@ -18,8 +18,8 @@ Ext.define('MySpots.fwk.BasicPolyline',{
         path : undefined, //initial array of points to draw the polyline with,
         geodesic : true,
 
-        polyline : undefined,
-        map : undefined
+        polyline : undefined, //Google Polyline instance
+        map : undefined //Google Maps instance
 	},
 	constructor : function( config )
 	{
@@ -90,7 +90,9 @@ Ext.define('MySpots.fwk.BasicPolyline',{
 	},
 	addPoint : function( lat, lng )
 	{
-
+		var me = this;
+		var point = new google.maps.LatLng(lat, lng);
+		me.getPolyline().getPath().push( point );
 	},
 	/*
 		Removes a point on the polyline based on 
@@ -98,6 +100,23 @@ Ext.define('MySpots.fwk.BasicPolyline',{
 	*/
 	removePoint : function( lat, lng )
 	{
+		var me = this;
+		var pointToRemove = new google.maps.LatLng(lat, lng);
+		var pointsOnPath = me.getPolyline().getPath();
+		var i = 0;
+		var found = false;
+		
+		Ext.Array.each( pointsOnPath , function( point ){
+			if( pointToRemove.equals( point ) )
+			{
+				found = true;
+				return false; //break out of loop
+			}
+			++i;
+		});
 
+		if( found )
+			pointsOnPath.removeAt( i );
+		return found;
 	}
 });

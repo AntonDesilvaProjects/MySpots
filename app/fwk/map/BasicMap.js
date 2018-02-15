@@ -219,7 +219,7 @@ Ext.define('MySpot.fwk.map.BasicMap',{
 
 		@param componentIdToRemove - component id or array of component id which
 		belong to components on the map. Component should implement removeFromMap
-		function which will remove the component from the underling Google Maps map.
+		function which will remove the component from the underlying Google Maps map.
 		@param  componentType - one of the static types defined in the statics config
 
 		Fires remove component event

@@ -60,29 +60,9 @@ Ext.define('MySpots.view.header.HeaderBar',{
 					zoomchange : function( map, newZoom, oldZoom )
 					{
 						// console.log('New Zoom:' + newZoom + ', Old Zoom: ' + oldZoom );
-						var m = map.markers;
+						//var m = map.markers;
 						
-						map.removeMarker( m.get( m.getKeys()[0] ) );
-
-					},
-					click : function( map, args )
-					{
-						var marker = Ext.create('MySpots.fwk.BasicMarker', {
-							lat : args.map.lat,
-							lng : args.map.lng,
-							animation : 'drop',
-							title : "Places",
-							label : 'Australia',
-							draggable : true,
-							listeners : {
-								click : function( marker, event )
-								{
-									console.log( event );
-								}
-							}
-						});
-						//or marker.addToMap( map );
-						map.addMarker( marker );
+						//map.removeMarker( m.get( m.getKeys()[0] ) );
 
 						var polyline = Ext.create('MySpots.fwk.BasicPolyline', {
 							path : [
@@ -92,7 +72,40 @@ Ext.define('MySpots.view.header.HeaderBar',{
 						        {lat: -27.467, lng: 153.027}
 							]
 						});
+						map.addPolyline( polyline );
+
+					},
+					click : function( map, args )
+					{
+						// var marker = Ext.create('MySpots.fwk.BasicMarker', {
+						// 	lat : args.map.lat,
+						// 	lng : args.map.lng,
+						// 	animation : 'drop',
+						// 	title : "Places",
+						// 	label : 'Australia',
+						// 	draggable : true,
+						// 	listeners : {
+						// 		click : function( marker, event )
+						// 		{
+						// 			console.log( event );
+						// 		}
+						// 	}
+						// });
+						// //or marker.addToMap( map );
+						// map.addMarker( marker );
+
+						// var polyline = Ext.create('MySpots.fwk.BasicPolyline', {
+						// 	path : [
+						// 		{lat: 37.772, lng: -122.214},
+						//         {lat: 21.291, lng: -157.821},
+						//         {lat: -18.142, lng: 178.431},
+						//         {lat: -27.467, lng: 153.027}
+						// 	]
+						// });
 						//map.addPolyline( polyline );
+
+						polyline = map.polylines.get( map.polylines.getKeys()[0] );
+						polyline.addPoint( args.map.lat, args.map.lng );
 					},
 					polylineadded : function() {
 						alert('polyline added')
@@ -104,23 +117,5 @@ Ext.define('MySpots.view.header.HeaderBar',{
 			}			
 		];
 		this.callParent( arguments );
-		/*
-
-					debugger;
-			
-			var el = me.getEl();
-			var cmpElement = me.getEl().dom.id;
-
-			//var a = document.getElementById( cmpElement );
-
-			map = new google.maps.Map( el.dom, {
-				center : {
-					lat : -34.397,
-					lng : 150.644
-				},
-				zoom : mapOptions.zoom
-			});
-			me.setMap( map );
-	*/
 	}
 });
