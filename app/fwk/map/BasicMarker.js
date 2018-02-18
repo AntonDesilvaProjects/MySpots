@@ -67,9 +67,9 @@ Ext.define('MySpots.fwk.map.BasicMarker', {
 		markerConfig.shape = me.getShape();
 		if( me.getAnimation() !== undefined )
 		{
-			if( me.getAnimation() === MySpots.fwk.BasicMarker.BOUNCE )
+			if( me.getAnimation() === MySpots.fwk.map.BasicMarker.BOUNCE )
 				markerConfig.animation = googleMaps.Animation.BOUNCE;
-			else if( me.getAnimation() === MySpots.fwk.BasicMarker.DROP )
+			else if( me.getAnimation() === MySpots.fwk.map.BasicMarker.DROP )
 				markerConfig.animation = googleMaps.Animation.DROP;
 		}
 

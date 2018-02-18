@@ -20,12 +20,13 @@ Ext.define('MySpots.fwk.map.BasicInfoWindow',{
 			tplStr : undefined,
 			data : undefined
 		},
+		tpl : undefined, //An already compiled template
+		data : undefined, //Load this data into the template
 
 		map : undefined, //A map is required to display the info window
 		marker : undefined, //if the lat/lng is not specified, use marker,
 		infoWindow : undefined //google maps instance of the infoWindow,
 	},
-	tpl : undefined,
 	constructor : function( config )
 	{
 		var me = this;
@@ -48,12 +49,19 @@ Ext.define('MySpots.fwk.map.BasicInfoWindow',{
 				infoWinOptions.maxWidth = me.getMaxWidth();
 
 				//Configure the content of the info window
+				var tpl = me.getTpl(); 
 				var tplConfig = me.getTplConfig();
-				if( tplConfig && tplConfig.tplStr && tplConfig.data )
+
+				if( tpl )//If there is already a compiled template, use it
 				{
-					var tpl = new Ext.Template( tplConfig.tplStr );
-					tpl.compile();
-					var generatedHtml = tpl.apply( tplConfig.data );
+					var generatedHtml = tpl.apply( me.getData() || {} );
+					infoWinOptions.content = generatedHtml; 
+				}
+				else if( tplConfig && tplConfig.tplStr )
+				{
+					var generatedTpl = new Ext.Template( tplConfig.tplStr );
+					me.setTpl( generatedTpl.compile() );
+					var generatedHtml = generatedTpl.apply( tplConfig.data ||  me.getData() || {} );
 					infoWinOptions.content = generatedHtml; 
 				}
 				else
@@ -62,12 +70,23 @@ Ext.define('MySpots.fwk.map.BasicInfoWindow',{
 				infoWindow = new googleMaps.InfoWindow( infoWinOptions );
 				me.setInfoWindow( infoWindow );
 
-				//Configure Events
-
+				//Register event listeners
+				var infoWindowEvents = googleMaps.event;
+				infoWindowEvents.addListener( infoWindow, 'closeclick', Ext.bind( me.onInfoWindowClose, me ) );
 			}
 		}
 		return infoWindow;
 	},
+
+	/*
+		Event Handlers
+	*/
+	onInfoWindowClose : function()
+	{
+		var me = this;
+		me.fireEvent( 'close', me );
+	},
+
 	/*	
 		Displays this InfoWindow. To show the InfoWindow, a BasicMap and 
 		a position are required. 
@@ -81,10 +100,8 @@ Ext.define('MySpots.fwk.map.BasicInfoWindow',{
 		if( !showInMap )
 			throw "Cannot show BasicInfoWindow without a map!";
 
-		var position = {
-			lat : me.getLat(),
-			lng : me.getLng()
-		};
+		var position = me.getMarker() ? me.getMarker() : { lat : me.getLat(), lng : me.getLng() };
+
 		if( positionOps )
 			position = positionOps; //Even if position was supplied as an initial
 									//config, give preference to args
@@ -99,10 +116,19 @@ Ext.define('MySpots.fwk.map.BasicInfoWindow',{
 			me.setLat( position.lat );
 			me.setLng( position.lng );
 			me.getInfoWindow().setPosition( position );
-			me.getInfoWindow().open( showInMap.getMap());
+			me.getInfoWindow().open( showInMap.getMap() );
 		}
 		else
 			throw "Cannot show BasicInfoWindow without a position(latitude and longitude)!";
+		me.fireEvent( 'show', me );
+	},
+	/*
+		Closes the BasicInfoWindow by removing its DOM element from the map
+	*/
+	close : function()
+	{
+		var me = this;
+		me.getInfoWindow().close();
 	},
 	/*
 		Loads data to the current html template
@@ -110,6 +136,11 @@ Ext.define('MySpots.fwk.map.BasicInfoWindow',{
 	loadData : function( data )
 	{
 		var me = this;
-		if( me.getTplConfig().tplStr )
+		var tpl = me.getTpl();
+		if( !tpl )
+			throw "Template not defined!";
+		me.setContent( tpl.apply( data || {} ) );
+		me.getInfoWindow().setContent( me.getContent() );
+		me.fireEvent( 'dataloaded', me, data, tpl );
 	}
 });

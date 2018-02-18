@@ -79,22 +79,22 @@ Ext.define('MySpots.view.header.HeaderBar',{
 					},
 					click : function( map, args )
 					{
-						// var marker = Ext.create('MySpots.fwk.BasicMarker', {
-						// 	lat : args.map.lat,
-						// 	lng : args.map.lng,
-						// 	animation : 'drop',
-						// 	title : "Places",
-						// 	label : 'Australia',
-						// 	draggable : true,
-						// 	listeners : {
-						// 		click : function( marker, event )
-						// 		{
-						// 			console.log( event );
-						// 		}
-						// 	}
-						// });
-						// //or marker.addToMap( map );
-						// map.addMarker( marker );
+						var marker = Ext.create('MySpots.fwk.map.BasicMarker', {
+							lat : args.map.lat,
+							lng : args.map.lng,
+							animation : 'drop',
+							title : "Places",
+							label : 'Australia',
+							draggable : true,
+							listeners : {
+								click : function( marker, event )
+								{
+									console.log( event );
+								}
+							}
+						});
+						//or marker.addToMap( map );
+						map.addMarker( marker );
 
 						// var polyline = Ext.create('MySpots.fwk.BasicPolyline', {
 						// 	path : [
@@ -114,15 +114,22 @@ Ext.define('MySpots.view.header.HeaderBar',{
 							content : '<h1>Hey there!</h1>',
 							tplConfig : {
 								tplStr : '<h1>{text}</h1>',
-								data : {
+								/*data : {
 									text : 'From Template!'
-								}
+								}*/
 							},
+							marker : null,
+							lat : -27.467,
+							lng : 153.027,
+							tpl : new Ext.XTemplate( '<h1>{text}</h1>' ),
+							
 							//maxWidth : 100,
-							lat : args.map.lat, 
-							lng : args.map.lng
+							// lat : 0,//args.map.lat, 
+							// lng : 0//0args.map.lng
 						});
-						infoWindow.show( map );
+						infoWindow.loadData({ text : 'loaded from outside'})
+						infoWindow.show( map, /*{ lat : -18.142, lng : 178.431}*/ marker );
+						
 					},
 					polylineadded : function() {
 						alert('polyline added')
