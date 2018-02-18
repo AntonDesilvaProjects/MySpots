@@ -5,7 +5,9 @@ Ext.define('MySpots.view.header.HeaderBar',{
 	extend : 'Ext.toolbar.Toolbar',
 	alias : 'widget.headerBar',
 	requires : [
-		'MySpot.fwk.map.BasicMap'
+		'MySpots.fwk.map.BasicMap',
+		'MySpots.fwk.map.BasicInfoWindow',
+		'MySpots.fwk.map.BasicPolyline'
 	],
 	initComponent : function()
 	{
@@ -64,7 +66,7 @@ Ext.define('MySpots.view.header.HeaderBar',{
 						
 						//map.removeMarker( m.get( m.getKeys()[0] ) );
 
-						var polyline = Ext.create('MySpots.fwk.BasicPolyline', {
+						var polyline = Ext.create('MySpots.fwk.map.BasicPolyline', {
 							path : [
 								{lat: 37.772, lng: -122.214},
 						        {lat: 21.291, lng: -157.821},
@@ -104,8 +106,23 @@ Ext.define('MySpots.view.header.HeaderBar',{
 						// });
 						//map.addPolyline( polyline );
 
-						polyline = map.polylines.get( map.polylines.getKeys()[0] );
-						polyline.addPoint( args.map.lat, args.map.lng );
+						//polyline = map.polylines.get( map.polylines.getKeys()[0] );
+						//polyline.addPoint( args.map.lat, args.map.lng );
+
+
+						var infoWindow = Ext.create('MySpots.fwk.map.BasicInfoWindow',{
+							content : '<h1>Hey there!</h1>',
+							tplConfig : {
+								tplStr : '<h1>{text}</h1>',
+								data : {
+									text : 'From Template!'
+								}
+							},
+							//maxWidth : 100,
+							lat : args.map.lat, 
+							lng : args.map.lng
+						});
+						infoWindow.show( map );
 					},
 					polylineadded : function() {
 						alert('polyline added')

@@ -2,7 +2,7 @@
 	Wrapper around the Google Maps marker object. An instance of this
 	class has to be passed to a BasicMap object in order to be drawn.
 */
-Ext.define('MySpots.fwk.BasicMarker', {
+Ext.define('MySpots.fwk.map.BasicMarker', {
 	identifier : {
 		type : 'sequential',
 		prefix : 'marker_'

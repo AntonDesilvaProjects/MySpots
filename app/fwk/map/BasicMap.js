@@ -1,4 +1,4 @@
-Ext.define('MySpot.fwk.map.BasicMap',{
+Ext.define('MySpots.fwk.map.BasicMap',{
 	extend : 'Ext.container.Container',
 	xtype : [
 		'basic-map',
@@ -198,12 +198,12 @@ Ext.define('MySpot.fwk.map.BasicMap',{
 		var addCount = 0;
 		Ext.Array.forEach( me.convertToArray( mapComponent ), function( component ) 
 		{
-			if( component instanceof MySpots.fwk.BasicMarker )
+			if( component instanceof MySpots.fwk.map.BasicMarker )
 			{
 				me.markers.add( component.getId(), component );
 				me.fireEvent('markeradded', me, component );
 			}
-			else if( component instanceof MySpots.fwk.BasicPolyline )
+			else if( component instanceof MySpots.fwk.map.BasicPolyline )
 			{
 				me.polylines.add( component.getId(), component );
 				me.fireEvent('polylineadded', me, component );

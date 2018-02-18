@@ -1,4 +1,4 @@
-Ext.define('MySpots.fwk.BasicPolyline',{
+Ext.define('MySpots.fwk.map.BasicPolyline',{
 	identifier : {
 		type : 'sequential',
 		prefix : 'polyline_'
