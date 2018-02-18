@@ -88,6 +88,33 @@ Ext.define('MySpots.fwk.map.BasicMap',{
 				map = new googleMaps.Map( cmpElement.dom, mapOptions );
 				me.setMap( map );
 
+
+				//Intialize geolocation
+				if( me.getUseCurrentLocation() )
+				{
+					var geoLocator = navigator.geolocation;
+					if( geoLocator )
+					{
+						//Getting current position is async. b/c we need to ask the user
+						//for permission. User might not grant/deny permission instantly
+						//so callbacks are used when response is known
+						geoLocator.getCurrentPosition( 
+							function( position ) //User granted permission
+							{
+								var currentPos = {
+									lat : position.coords.latitude,
+									lng : position.coords.longitude
+								};
+								me.getMap().setCenter( currentPos );
+							},
+							function( errorMsg ) //User denied permission/other issue
+							{
+								console.log( errorMsg.code + " : " + errorMsg.message );
+							}
+						);
+					}
+				}
+
 				me.prevZoom = mapOptions.zoom;
 
 				//Attach event listeners

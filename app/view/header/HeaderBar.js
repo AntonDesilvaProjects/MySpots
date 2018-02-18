@@ -49,12 +49,13 @@ Ext.define('MySpots.view.header.HeaderBar',{
 			{
 				xtype : 'basic-map',
 				itemId : 'basic-map',
+				useCurrentLocation : true,
 				mapOptions : {
 					zoom : 3,
-					center : {
-						lat : -34.397,
-						lng : 150.644
-					}
+					// center : {
+					// 	lat : -34.397,
+					// 	lng : 150.644
+					// }
 				},
 				width : 500,
 				height : 500,
@@ -129,7 +130,7 @@ Ext.define('MySpots.view.header.HeaderBar',{
 						});
 						infoWindow.loadData({ text : 'loaded from outside'})
 						infoWindow.show( map, /*{ lat : -18.142, lng : 178.431}*/ marker );
-						
+
 					},
 					polylineadded : function() {
 						alert('polyline added')
