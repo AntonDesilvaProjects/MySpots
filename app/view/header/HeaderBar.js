@@ -51,11 +51,12 @@ Ext.define('MySpots.view.header.HeaderBar',{
 				itemId : 'basic-map',
 				useCurrentLocation : true,
 				mapOptions : {
+					styles : 'silver',
 					zoom : 3,
-					// center : {
-					// 	lat : -34.397,
-					// 	lng : 150.644
-					// }
+					center : {
+						lat : -34.397,
+						lng : 150.644
+					}
 				},
 				width : 500,
 				height : 500,

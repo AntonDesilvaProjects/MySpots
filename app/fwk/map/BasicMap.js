@@ -33,7 +33,8 @@ Ext.define('MySpots.fwk.map.BasicMap',{
 			mapTypeId : 'roadmap',
 			maxZoom : null,
 			minZoom : null,
-			zoom : 10
+			zoom : 10,
+			styles : 'default'
 		}
 	},
 
@@ -82,6 +83,10 @@ Ext.define('MySpots.fwk.map.BasicMap',{
 
 			if( googleMaps )
 			{
+
+				//Apply the map styles
+				mapOptions.styles = MySpots.fwk.map.BasicMapStyle.styles[ mapOptions.styles ];
+
 				//Initialize a Google Maps object with map options and 
 				//attach it to the container's DOM
 				var cmpElement = me.getEl();
