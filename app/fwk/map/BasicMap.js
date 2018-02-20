@@ -41,7 +41,7 @@ Ext.define('MySpots.fwk.map.BasicMap',{
 	markers : new Ext.util.HashMap(),
 	polylines : new Ext.util.HashMap(),
 
-	defaultListenerScope : true,
+	//defaultListenerScope : true,
 	/*
 		Merge the default config with client config and initialize the component.
 	*/

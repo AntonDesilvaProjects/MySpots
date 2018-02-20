@@ -4,6 +4,7 @@
 Ext.define('MySpots.view.tab.ContentTabPanel',{
 	extend : 'Ext.tab.Panel',
 	requires : [
+        'MySpots.view.tab.spots.Spots'
 	],
 
 	alias : 'widget.contentTabPanel',
@@ -22,11 +23,13 @@ Ext.define('MySpots.view.tab.ContentTabPanel',{
         }
     },
 
-    items: [{
-        title: 'Spots',
-        glyph: 72,
-        html: "KitchenSink.DummyText.longText"
-    }, {
+    items: [
+        {
+            title: 'Spots',
+            glyph: 72,
+            xtype : 'spotsTab'
+        }, 
+    {
         title: 'Transit',
         glyph: 117,
         html: "KitchenSink.DummyText.extraLongText"
