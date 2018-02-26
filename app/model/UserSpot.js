@@ -3,12 +3,12 @@ Ext.define('MySpots.model.UserSpot',{
 	fields : [
 		{
 			name : 'latitude',
-			type : 'string',
+			type : 'float',
 			mapping : 'latitude'
 		},
 		{
 			name : 'longitude',
-			type : 'string',
+			type : 'float',
 			mapping : 'longitude'
 		},
 		{

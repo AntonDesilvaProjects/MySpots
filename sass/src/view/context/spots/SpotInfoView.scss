@@ -1,0 +1,71 @@
+.spot-info-view {
+	padding : 10px 
+}
+
+.image-stack {
+	border: 6px solid #fff;
+	float: left;
+	height: 200px; width: 200px;
+	margin: 10px;
+	position: relative;
+	-webkit-box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+	-moz-box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+	box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    text-align: center;
+    color: white;
+    margin-left : 60px;
+    cursor : pointer;
+}
+
+.image-stack img {
+	width: 190px;
+	height: 190px;
+}
+
+.image-stack::before {
+	content: "";
+	height: 200px; width: 200px;
+	background: #eff4de;
+	border: 6px solid #fff;
+	
+	position: absolute;
+	z-index: -1;
+	top: 0px;
+	left: -10px;
+	
+	-webkit-box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+	-moz-box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+	box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+	
+	-webkit-transform: rotate(-5deg);
+	-moz-transform: rotate(-5deg);
+	-o-transform: rotate(-5deg);
+	-ms-transform: rotate(-5deg);
+	transform: rotate(-5deg);
+}
+
+.image-stack::after {
+	content: "";
+	height: 200px; width: 200px;
+	background: #768590;
+	border: 6px solid #fff;
+	position: absolute;
+	z-index: -1;
+	top: 5px;
+	left: 0px;
+	-webkit-box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+	-moz-box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+	box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+	-webkit-transform: rotate(4deg);
+	-moz-transform: rotate(4deg);
+	-o-transform: rotate(4deg);
+	-ms-transform: rotate(4deg);
+	transform: rotate(4deg);
+}
+
+
+.bottom-middle {
+    position: absolute;
+    bottom: 8px;
+    right: 35%;
+}

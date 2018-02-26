@@ -4,18 +4,28 @@
 */
 Ext.define('MySpot.view.context.ContextPanel',{
 	extend : 'Ext.panel.Panel',
-	requires : [],
+	requires : [
+		'MySpots.view.context.spots.SpotsContextPanel'
+	],
 	alias : 'widget.contextPanel',
 	title : 'Map Info',
 	layout : {
-		type : 'vbox' //change to card layout so we can flip between cards for each tab
+		type : 'card' //change to card layout so we can flip between cards for each context
 	},
-	width : 250,
+	width : 350,
 	collapsible : true,
 	border : 1,
-	intComponent : function()
+	controller : null,
+	viewModel : null,
+	initComponent : function()
 	{
 		var me = this;
+		var spotsContextPanel = Ext.widget( 'spotsContextPanel',{
+
+		});
+		me.items = [
+			spotsContextPanel
+		];
 		me.callParent( arguments );
 	}
 });

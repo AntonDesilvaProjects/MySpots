@@ -29,18 +29,21 @@ Ext.define('MySpots.view.tab.ContentTabPanel',{
             glyph: 72,
             xtype : 'spotsTab'
         }, 
-    {
-        title: 'Transit',
-        glyph: 117,
-        html: "KitchenSink.DummyText.extraLongText"
-    }, {
-        title: 'Places',
-        glyph: 85,
-        html: "KitchenSink.DummyText.longText"
-    }, {
-        title: 'Profile',
-        glyph: 42,
-        html: "KitchenSink.DummyText.extraLongText"
-    }]
+        {
+            title: 'Transit',
+            glyph: 117,
+            html: "KitchenSink.DummyText.extraLongText"
+        }, 
+        {
+            title: 'Places',
+            glyph: 85,
+            html: "KitchenSink.DummyText.longText"
+        }, 
+        {
+            title: 'Profile',
+            glyph: 42,
+            html: "KitchenSink.DummyText.extraLongText"
+        }
+    ]
 	
 });

@@ -17,7 +17,7 @@ Ext.define('MySpots.view.tab.spots.Spots',{
 			reference : 'mySpotsMap',
 			useCurrentLocation : true,
 			mapOptions : {
-				styles : 'night',
+				styles : 'silver',
 				zoom : 15,
 				center : {
 					lat : -34.397,
