@@ -217,6 +217,12 @@
         {
             "path": "app.js",
             "bundle": true
+        },
+        {
+            "path" : "resources/lib/js/jquery.min.js"
+        },
+        {
+            "path" : "resources/lib/js/bootstrap.min.js"
         }
     ],
 
@@ -278,6 +284,9 @@
             "path": "${build.out.css.path}",
             "bundle": true,
             "exclude": ["fashion"]
+        },
+        {
+            "path" : "resources/lib/css/bootstrap.min.css"
         }
     ],
 

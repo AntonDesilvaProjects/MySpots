@@ -7,7 +7,8 @@ Ext.define('MySpots.view.header.HeaderBar',{
 	requires : [
 		'MySpots.fwk.map.BasicMap',
 		'MySpots.fwk.map.BasicInfoWindow',
-		'MySpots.fwk.map.BasicPolyline'
+		'MySpots.fwk.map.BasicPolyline',
+		'MySpots.fwk.image.ImageViewer'
 	],
 	initComponent : function()
 	{
