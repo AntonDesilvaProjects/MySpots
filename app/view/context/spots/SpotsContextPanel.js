@@ -9,16 +9,50 @@ Ext.define('MySpots.view.context.spots.SpotsContextPanel',{
 	layout : {
 		type : 'vbox'
 	},
+	autoScroll : true,
 	viewModel : 'spotContextViewModel', //view model consisting of ALL the data relevant to currently selected Spot
 	controller : 'spotContextController',
 	initComponent : function()
 	{
 		var me = this;
-		var spotInfoView = Ext.widget( 'spotInfoView',{
-			itemId : 'spotInfoView'
-		});
+
 		me.items = [
-			spotInfoView
+			{
+				xtype : 'panel',
+				title : 'Spot Info',
+				collapsible : true,
+				items : [
+					{
+						xtype : 'spotInfoView',
+						itemId : 'userSpotInfo'
+					}
+				],
+				width : '100%'
+			},
+			{
+				xtype : 'panel',
+				title : 'Transit',
+				collapsible : true,
+				items : [
+					{
+						xtype : 'spotInfoView',
+						itemId : 'userSpotInfo'
+					}
+				],
+				width : '100%'
+			},
+			{
+				xtype : 'panel',
+				title : 'Nearby Places',
+				collapsible : true,
+				items : [
+					{
+						xtype : 'spotInfoView',
+						itemId : 'userSpotInfo'
+					}
+				],
+				width : '100%'
+			}
 		];
 		me.callParent( arguments );
 	}

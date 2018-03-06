@@ -2,7 +2,9 @@
 	Displays Spot information uploaded by the user. This info. includes Spot name,
 	position, images, etc.
 */
-var spotInfoTpl = new Ext.XTemplate( '<div class="spot-info-view">',
+var spotInfoTpl = new Ext.XTemplate( 
+						'<tpl if="!Ext.isEmpty(title)">',
+							'<div class="spot-info-view">',
 								'<h3>{title}</h3>',
 								'<h4>{description}</h4>',
 								'Location: {lat},{lng}',
@@ -11,7 +13,12 @@ var spotInfoTpl = new Ext.XTemplate( '<div class="spot-info-view">',
 									'<img src="{[values.images[0]]}"/>',
 									'<span class="bottom-middle">{[values.images.length]} photo(s)</span>',
 								'</div>',
-							'</div>');
+							'</div>',
+						'<tpl else>',
+							'<div class="spot-info-view">',
+								'<h3>Select a Spot to see its information</h3>',
+							'</div>',
+						'</tpl>');
 
 Ext.define('MySpots.view.context.spots.SpotInfoView', {
 	extend : 'Ext.view.View',
@@ -22,7 +29,7 @@ Ext.define('MySpots.view.context.spots.SpotInfoView', {
 	tpl : spotInfoTpl,
 	itemSelector : 'div.spot-info-view',
 	bind : {
-		data : '{userSpotInfo}'
+		data : '{userSpotInfo}' //We have automatic access to this component's parent's view model
 	},
 	/*viewModel : {
 		data : {
@@ -42,37 +49,25 @@ Ext.define('MySpots.view.context.spots.SpotInfoView', {
 			delegate : 'div.image-stack',
 			click : function( event, target )
 			{
+				var me = this;
 				try
 				{
 					var spotId = target.attributes.spotid.nodeValue;
-					//Make Ajax call to fetch the images
-					//Launch image viewer
-					var imgs = Ext.ComponentQuery.query('#userSpotInfo')[0].getData().images
-					debugger;
-
-					var win = Ext.widget('window', {
+					var imageWindow = Ext.widget('window', {
 						items : [
 							{
 								xtype : 'imageViewer',
-								bind : {
-									images : '{userSpotInfo.images}'
-								},
-								width : '100%',
-								height : '100%'
+								images : me.component.data.images,
+								width : 500,
+								height : 350
 							}
 						],
-						itemId : 'myWind',
+						itemId : 'imageWindow',
 						autoShow : true,
-						//modal : true,
+						modal : true,
 						width : 500,
-						height : 400,
-						title : 'Image Viewer',
-						listeners : {
-							myCustomEvent : function()
-							{
-								alert('recieved custom event!')
-							}
-						}
+						height : 350,
+						title : 'Images'
 					});
 				}
 				catch( err )
