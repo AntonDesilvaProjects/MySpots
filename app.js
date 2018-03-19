@@ -9,7 +9,8 @@ Ext.application({
     extend: 'MySpots.Application',
 
     requires: [
-        'MySpots.view.main.MainPage'
+        'MySpots.view.main.MainPage',
+        'MySpots.fwk.map.MapServices'
     ],
 
     // The name of the initial view to create. With the classic toolkit this class

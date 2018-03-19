@@ -2,6 +2,11 @@ Ext.define('MySpots.model.UserSpot',{
 	extend : 'Ext.data.Model',
 	fields : [
 		{
+			name : 'spotId',
+			type : 'string',
+			mapping : 'spotId'
+		},
+		{
 			name : 'latitude',
 			type : 'float',
 			mapping : 'latitude'

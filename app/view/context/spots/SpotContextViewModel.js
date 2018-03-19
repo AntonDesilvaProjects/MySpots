@@ -4,6 +4,7 @@ Ext.define('MySpots.view.context.spots.SpotContextViewModel',{
 	],
 	alias : 'viewmodel.spotContextViewModel',
 	data : {
+		currentMarker : undefined, //convenience reference to the currently selected marker
 		userSpotInfo : {}
 	}
 });

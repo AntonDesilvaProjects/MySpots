@@ -17,15 +17,28 @@ Ext.define('MySpot.view.context.ContextPanel',{
 	border : 1,
 	controller : null,
 	viewModel : null,
+	statics : {
+		CONTEXT : {
+			SPOTS : 'spots'
+		}
+	},
 	initComponent : function()
 	{
 		var me = this;
 		var spotsContextPanel = Ext.widget( 'spotsContextPanel',{
-
+			width : '100%'
 		});
 		me.items = [
 			spotsContextPanel
 		];
 		me.callParent( arguments );
+	},
+	/*
+		Switches context based on passed in parameters.
+		@param context - the context to switch to.
+	*/
+	switchContext : function( context )
+	{
+
 	}
 });

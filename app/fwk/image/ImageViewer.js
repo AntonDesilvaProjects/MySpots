@@ -10,7 +10,7 @@ var imageViewerTpl = new Ext.XTemplate(
 		'<div class="carousel-inner">',
 			'<tpl for=".">',
 				'<div class="item {[xindex === 1 ? "active" : ""]}">',
-	        		'<img src="{.}" style="width:100%;">',
+	        		'<img src="{.}" style="width:100%;height:100%">',
 	      		'</div>',
 	      	'</tpl>',
 		'</div>',

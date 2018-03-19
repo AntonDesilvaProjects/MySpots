@@ -4,7 +4,9 @@ Ext.define('MySpots.view.context.spots.SpotsContextPanel',{
 	requires : [
 		'MySpots.view.context.spots.SpotInfoView',
 		'MySpots.view.context.spots.SpotContextViewModel',
-		'MySpots.view.context.spots.SpotContextController'
+		'MySpots.view.context.spots.SpotContextController',
+
+		'MySpots.view.context.spots.NearbyPlacesPanel'
 	],
 	layout : {
 		type : 'vbox'
@@ -47,8 +49,8 @@ Ext.define('MySpots.view.context.spots.SpotsContextPanel',{
 				collapsible : true,
 				items : [
 					{
-						xtype : 'spotInfoView',
-						itemId : 'userSpotInfo'
+						xtype : 'nearbyPlacesPanel',
+						itemId : 'nearbyPlacesPanel'
 					}
 				],
 				width : '100%'

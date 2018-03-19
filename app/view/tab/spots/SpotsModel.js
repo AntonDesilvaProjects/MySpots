@@ -28,3 +28,5 @@ Ext.define('MySpots.view.tab.spots.SpotsModel', {
 		}
 	}
 });
+
+//https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=40.7022802,-73.8215184&radius=1000&type=bus_station&key=AIzaSyAKCE6FKbwaROHan7GB4KeOe7jCUqTZoeI

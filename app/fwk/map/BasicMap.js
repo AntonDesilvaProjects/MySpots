@@ -5,6 +5,7 @@ Ext.define('MySpots.fwk.map.BasicMap',{
 		'basic-google-map'
 	],
 	requires : [
+	'MySpots.fwk.map.GoogleMapsConstants'
 	],
 	mixins : [
 		'Ext.mixin.Mashup',
@@ -12,7 +13,7 @@ Ext.define('MySpots.fwk.map.BasicMap',{
 	],
 	//Part of Mashup mixin which synchronously loads external scripts
 	requiredScripts : [
-		'//maps.googleapis.com/maps/api/js?key=AIzaSyAKCE6FKbwaROHan7GB4KeOe7jCUqTZoeI'
+		'//maps.googleapis.com/maps/api/js?key=AIzaSyAKCE6FKbwaROHan7GB4KeOe7jCUqTZoeI&libraries=places'
 	],
 	statics : {
 		POLYLINE : 'polyline',
@@ -287,6 +288,52 @@ Ext.define('MySpots.fwk.map.BasicMap',{
 			}
 		});	
 		return removeCount;
+	},
+	getNearbyPlaces : function( lat, lng, radius, options )
+	{
+		var me = this;
+		var map = me.getMap();
+		if( !map)
+			throw "Map not defined!";
+
+		var deferred = new Ext.Deferred();
+		var request = {
+			location : new google.maps.LatLng( lat, lng) ,
+			radius : radius
+		};
+		request = Ext.Object.merge( request, options );
+
+		if( !request.type instanceof Array )
+			request.type = [ request.type ];
+
+		var callback = function( results, status )
+		{
+			if( status === 'OK' || status === 'ZERO_RESULTS')
+			{
+				//https://data.cityofnewyork.us/api/views/kk4q-3rt2/rows.json?accessType=DOWNLOAD
+				deferred.resolve( results );
+			}
+			else
+				deferred.reject({ 
+					errorCode : status, 
+					message :"Unable to get nearby places at this time..."
+				});
+		};
+
+		var placeService = new google.maps.places.PlacesService( map );
+		placeService.nearbySearch( request, callback );
+
+
+
+		// var request = {
+		// 	placeId : 'ChIJnxVuwsdgwokRF0Ep9JcWjvc'
+		// };
+		// var service = new google.maps.places.PlacesService(map);
+		// service.getDetails(request, function(r){ console.clear();console.log( r);});
+
+
+		
+		return deferred;
 	},
 	setMapStyle : function( styleConfig )
 	{
