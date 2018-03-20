@@ -15,6 +15,7 @@ Ext.define('MySpots.view.context.spots.NearbyPlacesPanel',{
 			placeType : 'subway_station',
 			radius : 25000,
 			openNow : true,
+			keyword : null
 		},
 		formulas : {
 			filterClass : function( get )
@@ -27,6 +28,17 @@ Ext.define('MySpots.view.context.spots.NearbyPlacesPanel',{
 					cls = 'fas fa-filter';
 
 				this.getView().updateSearchBarTriggerCls( cls );
+			},
+			updateSearchResults : function( get )
+			{
+				var searchFilters = {};
+				searchFilters.type = get('placeType');
+				searchFilters.openNow = get('openNow');
+				searchFilters.keyword = get('keyword');
+
+				var  contextController = this.getView().up('spotsContextPanel').getController();
+				contextController.getNearbyPlaces( null, get('radius'), searchFilters );
+
 			}
 		},
 		stores : {
@@ -119,6 +131,9 @@ Ext.define('MySpots.view.context.spots.NearbyPlacesPanel',{
 							filters.show();
 					}
 				}
+			},
+			bind : {
+				value : '{keyword}'
 			}
 		});
 
@@ -132,7 +147,11 @@ Ext.define('MySpots.view.context.spots.NearbyPlacesPanel',{
 				{
 					text : '',
 					dataIndex : 'icon',
-					flex : 1
+					flex : 1,
+					renderer : function( value )
+					{
+						return Ext.String.format('<img src="{0}" width="25px" height="25px"/>', value );
+					}
 				},
 				{
 					text : 'Name',

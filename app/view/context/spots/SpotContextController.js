@@ -32,7 +32,8 @@ Ext.define('MySpots.view.context.spots.SpotContextController',{
 		me.getViewModel().set('userSpotInfo', userSpotInfo );
 
 		//load the nearby place info
-		me.getNearbyPlaces( null, 1000, { type : 'supermarket', keyword : 'trade',  openNow : true});
+		//{ type : 'subway_station',/* keyword : '',  openNow : true, */rankBy : google.maps.places.RankBy.DISTANCE }
+		me.getNearbyPlaces( null, 1700, {  } );
 	},
 	/*
 		Supported filters:
@@ -42,6 +43,10 @@ Ext.define('MySpots.view.context.spots.SpotContextController',{
 	{
 		var me = this;
 		var marker = marker || me.getViewModel().get('currentMarker');
+
+		if( !marker )
+			return;
+
 		var map = marker.getMap();
 		var additionalFilters = {};
 		Ext.Object.merge( additionalFilters, filters );
@@ -49,13 +54,24 @@ Ext.define('MySpots.view.context.spots.SpotContextController',{
 		map.getNearbyPlaces( marker.getLat(), marker.getLng(), radius, additionalFilters ).then( 
 		function( response )
 		{
-			console.log( response );
-
 			//Get reference to the nearbyplaces panel
-			//get its viewmodel and load the response object to
-			//its nearbyplace store. The grid will autoupdate
+			console.log( response );
+			var nearbyPlacesStore = me.getView().down('#nearbyPlacesPanel').getViewModel().getStore('searchResultsStore');
+			var nearbyPlaces = [];
+			Ext.Array.forEach( response, function( nearbyPlace ){
+				var placeModel = Ext.create('MySpots.model.context.spots.NearbyPlacesModel',{
+					latitude : nearbyPlace.geometry.location.lat(),
+					longitude : nearbyPlace.geometry.location.lng(),
+					name : nearbyPlace.name,
+					icon : nearbyPlace.icon,
+					placeId : nearbyPlace.place_id,
+					rating : nearbyPlace.rating
+				});
+				nearbyPlaces.push( placeModel );
+			});
+			nearbyPlacesStore.loadData( nearbyPlaces );
 
-		}, function( error ){
+		}, function( error ) {
 			console.log( error );
 		});
 	}
