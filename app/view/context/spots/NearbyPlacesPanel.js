@@ -12,12 +12,26 @@ Ext.define('MySpots.view.context.spots.NearbyPlacesPanel',{
 	padding : 10,
 	viewModel : {
 		data : {
-			placeType : 'subway_station',
+			placeType : '',
 			radius : 25000,
 			openNow : true,
-			keyword : null
+			keyword : ""
 		},
 		formulas : {
+			
+			updateSearchResults : function( get )
+			{
+				var searchFilters = {};
+				searchFilters.type = get('placeType');
+				searchFilters.openNow = get('openNow');
+				searchFilters.keyword = get('keyword');
+
+				console.log( 'current filters ');
+				console.log( searchFilters );
+
+				var  contextController = this.getView().up('spotsContextPanel').getController();
+				contextController.getNearbyPlaces( null, get('radius'), searchFilters );
+			},
 			filterClass : function( get )
 			{
 				var cls = undefined;
@@ -28,18 +42,8 @@ Ext.define('MySpots.view.context.spots.NearbyPlacesPanel',{
 					cls = 'fas fa-filter';
 
 				this.getView().updateSearchBarTriggerCls( cls );
+
 			},
-			updateSearchResults : function( get )
-			{
-				var searchFilters = {};
-				searchFilters.type = get('placeType');
-				searchFilters.openNow = get('openNow');
-				searchFilters.keyword = get('keyword');
-
-				var  contextController = this.getView().up('spotsContextPanel').getController();
-				contextController.getNearbyPlaces( null, get('radius'), searchFilters );
-
-			}
 		},
 		stores : {
 			placeTypeStore : {
@@ -49,7 +53,7 @@ Ext.define('MySpots.view.context.spots.NearbyPlacesPanel',{
 				data : MySpots.fwk.map.GoogleMapsConstants.getReadablePlaceTypes()
 			},
 			searchResultsStore : {
-				model : 'MySpots.model.context.spots.NearbyPlacesModel',
+				model : 'MySpots.model.context.spots.NearbyPlacesModel'
 			}
 		}
 	},
@@ -74,7 +78,7 @@ Ext.define('MySpots.view.context.spots.NearbyPlacesPanel',{
 					valueField : 'value',
 					typeAhead : true,
 					forceSelection : true,
-					minChars : 2,
+					minChars : 3,
 					bind : {
 						store : '{placeTypeStore}',
 						value : '{placeType}'
@@ -115,10 +119,9 @@ Ext.define('MySpots.view.context.spots.NearbyPlacesPanel',{
 			]
 		});
 
-		var searchBar = Ext.widget('combo', {
+		var searchBar = Ext.widget('textfield', {
 			reference : 'nearbyPlacesSearchBar',
 			itemId : 'searchBar',
-			store : null,
 			emptyText : 'Search for nearby places...',
 			triggers : {
 				picker : {

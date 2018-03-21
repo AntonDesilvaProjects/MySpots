@@ -50,7 +50,8 @@ Ext.define('MySpots.view.context.spots.SpotsContextPanel',{
 				items : [
 					{
 						xtype : 'nearbyPlacesPanel',
-						itemId : 'nearbyPlacesPanel'
+						itemId : 'nearbyPlacesPanel',
+						disabled : true
 					}
 				],
 				width : '100%'

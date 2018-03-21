@@ -31,6 +31,8 @@ Ext.define('MySpots.view.context.spots.SpotContextController',{
 		me.getViewModel().set('currentMarker', marker );
 		me.getViewModel().set('userSpotInfo', userSpotInfo );
 
+		me.getView().down('#nearbyPlacesPanel').setDisabled( false );
+
 		//load the nearby place info
 		//{ type : 'subway_station',/* keyword : '',  openNow : true, */rankBy : google.maps.places.RankBy.DISTANCE }
 		me.getNearbyPlaces( null, 1700, {  } );
